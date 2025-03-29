@@ -1,4 +1,4 @@
-import { Svix, Webhook } from "svix";
+import {Webhook } from "svix";
 import User from '../models/User.js'
 
 //API controller Function to manage clerk user with database
@@ -39,6 +39,7 @@ export const clerkWebhooks=async(req,res)=>{
             await User.findByIdAndUpdate(data.id,userData)
             res.json({})
             break;
+            
          }
          case "user.deleted":{
             await User.findByIdAndDelete(data.id)
