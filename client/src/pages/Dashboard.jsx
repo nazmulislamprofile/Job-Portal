@@ -1,25 +1,42 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {NavLink, Outlet, useNavigate} from 'react-router-dom'
 import { assets } from './../assets/assets';
+import { AppContext } from '../context/AppContext';
 const Dashboard = () => {
     const navigate=useNavigate();
+    const {companyData, setCompanyData, setCompanyToken}=useContext(AppContext)
+
+    //function for logout company
+    const logout=()=>{
+        setCompanyToken(null)
+        localStorage.removeItem('companyToken')
+        setCompanyData(null)
+        navigate('/')
+    }
+    useEffect(()=>{
+        if(companyData){
+            navigate('/dashboard/manage-jobs')
+        }
+    },[companyData])
     return (
         <div className='min-h-screen'>
         {/* Navbar for recruiter panel */}
             <div className='shadow py-4'>
                 <div className='px-4 flex justify-between items-center'>
                     <img onClick={e=>navigate('/')} className='max-sm:w-32 cursor-pointer' src={assets.logo} alt="" />
-                    <div className='flex items-center gap-3'>
-                        <p className='max-sm:hidden'>Welcom, insiderJobs</p>
+                    {companyData&&(
+                        <div className='flex items-center gap-3'>
+                        <p className='max-sm:hidden'>Welcom,{companyData.name} </p>
                         <div className='relative group'>
-                            <img className='rounded-full w-8 border' src={assets.company_icon} alt="" />
+                            <img className='rounded-full w-8 border' src={companyData.image} alt="" />
                             <div className='absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12'>
                                 <ul className='list-none m-0 p-2 bg-white rounded-md border text-sm'>
-                                    <li className='py-1 pr-10 px-2 cursor-pointer'>Logout</li>
+                                    <li onClick={logout} className='py-1 pr-10 px-2 cursor-pointer' >Logout</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+                    ) }
                 </div>
             </div>
 
@@ -42,7 +59,7 @@ const Dashboard = () => {
                     </NavLink>
                 </ul>
             </div>
-            <div>
+            <div className='flex-1 h-full p-2 sm:p-5'>
                 <Outlet/>
             </div>
         </div>
