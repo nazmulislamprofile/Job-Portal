@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import Company from "../models/company.js";
 import generateToken from "../utils/generateToken.js";
-import Job from "../models/job.js";
+import Job from "../models/Job.js";
 import JobApplication from "../models/JobApplication.js";
 import { mongoose } from "mongoose";
 //Register a company
