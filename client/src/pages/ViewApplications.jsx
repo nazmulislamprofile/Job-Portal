@@ -47,7 +47,9 @@ const ViewApplications = () => {
       fetchCompanyJobApplications();
     }
   }, [companyToken]);
-  return applicants ? (
+  return applicants ?applicants.length===0?(<div className='flex items-center justify-center h-[70vh]'>
+    <p className='text-xl sm:text-2xl'>No application available</p>
+</div>): (
     <div className="container p-4 mx-auto">
       <div>
         <table className="w-full max-w-4xl bg-white border border-gray-200 max-sm:text-sm ">
